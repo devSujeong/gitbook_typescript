@@ -1,4 +1,6 @@
-# Initial page
+---
+description: typesciript에 관한 모든 것을 정리합니다.
+---
 
-test입니
+# Typescript
 

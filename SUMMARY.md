@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Initial page](README.md)
+* [Typescript](README.md)
 
 ## settings
 
@@ -9,4 +9,8 @@
 ---
 
 * [Error Handling](error-handling.md)
+
+## libraries
+
+* [redux](libraries/redux.md)
 
