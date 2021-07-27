@@ -4,7 +4,8 @@
 
 ## settings
 
-* [Untitled](settings/untitled.md)
+* [Index](settings/untitled/README.md)
+  * [Install in Next.js](settings/untitled/install-in-next.js.md)
 
 ---
 

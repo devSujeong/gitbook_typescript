@@ -16,5 +16,15 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement {
 export default MyApp;
 ```
 
+## Unknown compiler options include & exclude
 
+include, exclude를 compilerOptions에 넣었을 때 발생
+
+## Specified 'include' paths were '\["_\*/_"\]' and 'exclude' paths were '\[\]'
+
+tsconfig파일과 같은 경로에 .ts파일이 하나도 없어서 생긴 문제.
+
+## ts2304: cannot find name ~
+
+tsx 파일을 ts로 선언했을 때 jsx를 알지 못
 
