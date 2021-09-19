@@ -78,7 +78,7 @@ npx typescript --init # tsconfig.json 만드는 명령어2
 ```javascript
 {
 	"compilerOptions": {
-		"allowJs": true, // js 파일도 허용
+		"allowJs": true, // js 파일도 허용. next.js에서 내가 설정 안해도 강제로 설정해버림.
 		"checkJs": true, // @ts-check 역할
 		"noImplicitAny": true, // any 타입으로 암시한 표현식과 선언에 오류를 발생시킵니다. any를 쓰더라도 명시를 하라!
 		"outDir": "./", // 컴파일 결과물을 어디에 놓을지 설정
