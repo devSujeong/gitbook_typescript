@@ -15,3 +15,7 @@
 
 * [redux](libraries/redux.md)
 
+---
+
+* [Types](types.md)
+
