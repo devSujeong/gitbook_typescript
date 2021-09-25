@@ -22,6 +22,30 @@ let arr: number[] = [1,2,3];
 let arr: Array<number> = [1,2,3];
 ```
 
+## Function definition
+
+```typescript
+function add(num1: number, num2: number): number {
+    return num1 + num2;
+}
+
+// optional parameter
+function printName(firstName: string, lastName?: string) {
+  console.log(firstName);
+  console.log(lastName); // undefined
+}
+
+// default parameter
+function printMessage(message: string = 'default message') {
+  console.log(message);
+}
+
+// Rest parameter
+function addNumbers(...numbers: number[]): number {
+  return numbers.reduce((a, b) => a + b);
+}
+```
+
 ## Typescript Types
 
 ```typescript
@@ -44,17 +68,36 @@ let unuseful: void = undefined; // 의미가 없는 코드..
   // 1) throw new Error(message);
   // 2) while (true) {}
 }
-```
 
-
-
-### Tuple
-
-튜플은 배열의 길이가 고정되고 각 요소의 타입이 지정되어 있는 배열 형식입니다.
-
-```text
+// Tuple: 배열의 길이가 고정되고 각 요소의 타입이 지정되어 있는 배열 형식.
+// 사용을 권장하지 않음. 왜냐하면 가독성이 많이 떨어짐.
+// interface, type alias, Object, class 형태로 사용할 것을 권장.
 let arr: [string, number] = ['hi', 10];
 ```
+
+## Type alias
+
+새로운 타입을 정의함. 모든 데이터 타입을 정의할 수 있으며, 추가로 String Literal Types도 가능함.
+
+```typescript
+type Text = string;
+const name: Text = 'sujeong';
+
+type Student = {
+  name: string;
+  age: number;
+};
+const student: Student = {
+  name: 'ellie',
+  age: 12,
+};
+
+// String Literal Types
+type Status = 'loading' | 'success' | 'failure';
+let status: Status = 'loading';
+```
+
+
 
 ### Enum
 

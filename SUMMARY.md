@@ -9,7 +9,8 @@
 
 ---
 
-* [Error Handling](error-handling.md)
+* [Types](types.md)
+* [Directive](directive.md)
 
 ## libraries
 
@@ -17,5 +18,5 @@
 
 ---
 
-* [Types](types.md)
+* [Error Handling](error-handling.md)
 
