@@ -12,11 +12,34 @@ function printArray(fruits: readonly string[]) {}
 
 ## \| \(Union Type\)
 
-또는\(or\) 이라는 의미로 사용함.
+a 또는 b 또는 c 또는 d가 올 수 있다는 뜻.
 
 ```typescript
 type Direction = 'left' | 'right' | 'up' | 'down';
 ```
+
+## & \(Intersection type\)
+
+모든 것을 다 합한 의미로 사용 a도 b도 c도 d도 다 있어야 한다는  
+
+```typescript
+type Student = {
+  name: string;
+  score: number;
+};
+
+type Worker = {
+  empolyeeId: number;
+  work: () => void;
+};
+
+function internWork(person: Student & Worker) {
+  console.log(person.name, person.empolyeeId, person.work());
+}
+
+```
+
+
 
 ## in
 
@@ -41,5 +64,31 @@ function printLoginState(state: LoginState) {
     console.log(`😭 ${state.reason}`);
   }
 }
+```
+
+## as \(Type Assertion\)
+
+타입을 명시적으로 지정해 줌
+
+```typescript
+function jsStrFunc(): any {
+    return 2;
+}
+const result = jsStrFunc();
+console.log((result as string).length);
+console.log((<string>result).length);
+```
+
+## !
+
+절대적으로 값이 있음을 확신할 때 표현
+
+```typescript
+function findNumbers(): number[] | undefined {
+    return undefined;
+  }
+  const numbers = findNumbers()!;
+  // or
+  numbers!.push(2);
 ```
 

@@ -73,6 +73,15 @@ let unuseful: void = undefined; // 의미가 없는 코드..
 // 사용을 권장하지 않음. 왜냐하면 가독성이 많이 떨어짐.
 // interface, type alias, Object, class 형태로 사용할 것을 권장.
 let arr: [string, number] = ['hi', 10];
+
+// Enum: 특정 값(상수)들의 집합
+// .이나 인덱스 번호로 접근이 가능하며, 인덱스를 사용자 편의로 변경도 가능합니다.
+// 사용을 권장하지 않음. 왜냐하면 숫자형 이넘은 값을 재할당할 수 있어 오염의 위험이 있고, tree shaking이 안되는 문제도 있다.
+// 다른 모바일 클라이언트와 맞춰야 할 때 부득이하게 사용.
+// 대안으로 type alias union type을 사용하거나 객체를 as const 형태로 사용가
+enum Avengers { Capt = 2, IronMan, Thor }
+let hero: Avengers = Avengers.Capt;
+let hero2: Avengers = Avenger[2] // Capt
 ```
 
 ## Type alias
@@ -97,17 +106,20 @@ type Status = 'loading' | 'success' | 'failure';
 let status: Status = 'loading';
 ```
 
+## Type Inference
 
+타입스크립트가 타입을 자동으로 추론함.
 
-### Enum
+## Type Assertion
 
-이넘은 특정 값\(상수\)들의 집합입니다.
+타입을 명시적으로 지정해 줌
 
-.이나 인덱스 번호로 접근이 가능하며, 인덱스를 사용자 편의로 변경도 가능합니다.
-
-```text
-enum Avengers { Capt = 2, IronMan, Thor }
-let hero: Avengers = Avengers.Capt;
-let hero2: Avengers = Avenger[2] // Capt
+```typescript
+function jsStrFunc(): any {
+    return 2;
+}
+const result = jsStrFunc();
+console.log((result as string).length);
+console.log((<string>result).length);
 ```
 
