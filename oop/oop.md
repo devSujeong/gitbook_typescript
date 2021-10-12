@@ -40,15 +40,41 @@ Object단위로 프로그래밍 하는 방식입니다. 생산성이 높고 높�
 
 추상화를 함으로써 내부 동작원리를 외부에서는 알지 못한다.
 
-Interface를 활용하여 추상화를 잘 구현할 수 있다. class의 property와 methods가 많아도 사용하고 노출할 것만 따로 interface를 만들고, 외부에서 그 interface를 타입으로 지정하면 interface에 지정된 것만 사용하게 강제된다. ㅍㅊ
+Interface를 활용하여 추상화를 잘 구현할 수 있다. class의 property와 methods가 많아도 사용하고 노출할 것만 따로 interface를 만들고, 외부에서 그 interface를 타입으로 지정하면 interface에 지정된 것만 사용하게 강제된다.
 
 #### Inhritance
 
-IS-A관계. 
+IS-A관계. extends를 활용하여 상속을 구현할 수 있고, 메서드 오버라이딩이 가능하다.(부모의 메서드를 자식 클래스가 다시 구현하면 자식 클래스의 메서드가 우선한다.)
+
+```typescript
+class CaffeLatteMachine extends CoffeeMachine {
+  constructor(beans: number, public readonly serialNumber: string) {
+    super(beans);
+  }
+  
+  private steamMilk(): void {
+    console.log('Steaming some milk ...');
+  }
+
+  makeCoffee(shots: number): CoffeeCup {
+    const coffee = super.makeCoffee(shots);
+    this.steamMilk();
+    return {
+      ...coffee,
+      hasMilk: true
+    }
+  }
+}
+```
+
+#### 문제점: 
+
+* 수직적이라서 다양성에 많이 취약하다.
+* 상속받은 부모가 조상의 메서드를 오버라이드했다면, 자식은 부모가 오버라이드한 메서드를 물려받는다.
 
 #### polymorphism
 
-다형성.
+다형성. 부모와 자식 클래스가 동일한 메서드를 가지고 있어서, 여러 클래스에서 메서드를 호출해서 사용할 수 있다.
 
 ### Get/Set
 
@@ -76,3 +102,188 @@ class User {
   user.age = 6; // setter
   console.log(user.age); // getter
 ```
+
+## Composition
+
+상속의 복잡성과 경직성을 피해 composition(합성) 기법을 추천.
+
+```typescript
+{
+  type CoffeeCup = {
+    shots: number;
+    hasMilk?: boolean;
+    hasSugar?: boolean;
+  };
+
+  interface CoffeeMaker {
+    makeCoffee(shots: number): CoffeeCup;
+  }
+
+  class CoffeeMachine implements CoffeeMaker {
+    private static BEANS_GRAMM_PER_SHOT: number = 7; // class level
+    private coffeeBeans: number = 0; // instance level
+    
+    public constructor(
+      coffeeBeans: number, 
+      private milk:MilkFrother, 
+      private sugar: SugarProvider
+    ) {
+      this.coffeeBeans = coffeeBeans;
+    }
+
+    fillCoffeeBeans(beans: number) {
+      if(beans < 0) {
+        throw new Error('value for beans should be greater than 0');
+      }
+
+      this.coffeeBeans += beans;
+    }
+
+    clean() {
+      console.log('cleaning the machine...');
+    }
+
+    private grindBeans(shots: number) {
+      console.log(`grinding beans for ${shots}`);
+      if(this.coffeeBeans < shots * CoffeeMachine.BEANS_GRAMM_PER_SHOT) {
+        throw new Error('Not enough coffee beans!');
+      }
+
+      this.coffeeBeans -= shots * CoffeeMachine.BEANS_GRAMM_PER_SHOT;
+    }
+
+    private preheat(): void {
+      console.log(`heating up...`);
+    }
+
+    private extract(shots: number): CoffeeCup {
+      console.log(`Pulling ${shots} shots...`);
+      return {
+        shots,
+        hasMilk: false
+      };
+    }
+
+    makeCoffee(shots: number): CoffeeCup {
+      this.grindBeans(shots);
+      this.preheat();
+      const coffee = this.extract(shots);
+      const sugarAdded = this.sugar.addSugar(coffee);
+      return this.milk.makeMilk(sugarAdded);
+    }
+  }
+
+  interface MilkFrother {
+    makeMilk(cup: CoffeeCup): CoffeeCup;
+  }
+
+  interface SugarProvider {
+    addSugar(cup: CoffeeCup): CoffeeCup;
+  }
+
+  // 싸구려 우유 거품기
+  class CheapMilkSteamer implements MilkFrother {
+    private steamMilk(): void {
+      console.log('Steaming some milk ...');
+    }
+
+    makeMilk(cup: CoffeeCup): CoffeeCup {
+      this.steamMilk();
+      return {
+        ...cup,
+        hasMilk: true,
+      };
+    }
+  }
+
+  class NoMilk implements MilkFrother {
+    makeMilk(cup: CoffeeCup): CoffeeCup {
+      return cup;
+    }
+  }
+
+  class FancyMilkSteamer implements MilkFrother {
+    private steamMilk(): void {
+      console.log('Fancy steaming some milk ...');
+    }
+
+    makeMilk(cup: CoffeeCup): CoffeeCup {
+      this.steamMilk();
+      return {
+        ...cup,
+        hasMilk: true,
+      };
+    }
+  }
+
+  class ColdMilkSteamer implements MilkFrother {
+    private steamMilk(): void {
+      console.log('Cold steaming some milk ...');
+    }
+
+    makeMilk(cup: CoffeeCup): CoffeeCup {
+      this.steamMilk();
+      return {
+        ...cup,
+        hasMilk: true,
+      };
+    }
+  }
+
+  // 설탕 제조기
+  class CandySugarMixer implements SugarProvider {
+    private getSugar() {
+      console.log('getting some sugar from candy');
+      return true;
+    }
+
+    addSugar(cup: CoffeeCup): CoffeeCup {
+      const sugar = this.getSugar();
+      return {
+        ...cup,
+        hasSugar: sugar,
+      };
+    }
+  }
+  class SugarMixer implements SugarProvider {
+    private getSugar() {
+      console.log('getting some sugar from jar!!!!');
+      return true;
+    }
+
+    addSugar(cup: CoffeeCup): CoffeeCup {
+      const sugar = this.getSugar();
+      return {
+        ...cup,
+        hasSugar: sugar,
+      };
+    }
+  }
+
+  class NoSugar implements SugarProvider {
+    addSugar(cup: CoffeeCup): CoffeeCup {
+      return cup;
+    }
+  }
+  
+  const cheapMilkMaker = new CheapMilkSteamer();
+  const fancyMilkMaker = new FancyMilkSteamer();
+  const coldMilkMaker = new ColdMilkSteamer();
+  const noMilk = new NoMilk();
+
+  const candySugar = new CandySugarMixer();
+  const sugar = new SugarMixer();
+  const noSugar = new NoSugar();
+
+  const sweetCandyMachine = new CoffeeMachine(12, noMilk, candySugar);
+  const sweetMachine = new CoffeeMachine(12, noMilk, sugar);
+  
+  const latteMachine = new CoffeeMachine(12, cheapMilkMaker, noSugar);
+  const coldLatteMachine = new CoffeeMachine(12, coldMilkMaker, noSugar);
+  const sweetLatteMachine = new CoffeeMachine(12, cheapMilkMaker, candySugar);
+}
+```
+
+## Abstract
+
+class, method를 추상화해서 자식 클래스가 구현하도록 강제할 수 있다.
