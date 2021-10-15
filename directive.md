@@ -10,7 +10,7 @@
 function printArray(fruits: readonly string[]) {}
 ```
 
-## \| \(Union Type\)
+## | (Union Type)
 
 a 또는 b 또는 c 또는 d가 올 수 있다는 뜻.
 
@@ -18,7 +18,7 @@ a 또는 b 또는 c 또는 d가 올 수 있다는 뜻.
 type Direction = 'left' | 'right' | 'up' | 'down';
 ```
 
-## & \(Intersection type\)
+## & (Intersection type)
 
 모든 것을 다 합한 의미로 사용 a도 b도 c도 d도 다 있어야 한다는  
 
@@ -66,7 +66,7 @@ function printLoginState(state: LoginState) {
 }
 ```
 
-## as \(Type Assertion\)
+## as (Type Assertion)
 
 타입을 명시적으로 지정해 줌
 
@@ -92,3 +92,10 @@ function findNumbers(): number[] | undefined {
   numbers!.push(2);
 ```
 
+## is
+
+A가 B타입인지 아닌지 확인
+
+```typescript
+A is B // true or false
+```
