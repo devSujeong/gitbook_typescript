@@ -11,6 +11,7 @@
 
 * [Types](types.md)
 * [Directive](directive.md)
+* [Generic](generic.md)
 
 ## libraries
 
