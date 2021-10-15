@@ -10,7 +10,7 @@
 ***
 
 * [Types](types.md)
-* [Directive](directive.md)
+* [Type predicate](type-predicate.md)
 * [Generic](generic.md)
 
 ## libraries
