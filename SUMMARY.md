@@ -12,6 +12,7 @@
 * [Types](types.md)
 * [Type predicate](type-predicate.md)
 * [Generic](generic.md)
+* [Utility Type](utility-type.md)
 
 ## libraries
 
