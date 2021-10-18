@@ -6,7 +6,7 @@
 tsc <file name> -w
 ```
 
-## 여러 개의 파일 WATCH 모
+## 여러 개의 파일 WATCH 모드&#x20;
 
 ```bash
 tsc --init // tsconfig 생
