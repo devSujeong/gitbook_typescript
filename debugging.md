@@ -1,0 +1,11 @@
+# debugging
+
+## tsconfig
+
+```
+{
+    ...
+    "sourcemap": true
+}
+```
+

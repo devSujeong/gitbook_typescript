@@ -6,6 +6,7 @@
 
 * [Index](settings/untitled/README.md)
   * [Install in Next.js](settings/untitled/install-in-next.js.md)
+  * [config for html](settings/untitled/config-for-html.md)
 
 ***
 
@@ -13,6 +14,7 @@
 * [Type predicate](type-predicate.md)
 * [Generic](generic.md)
 * [Utility Type](utility-type.md)
+* [debugging](debugging.md)
 
 ## libraries
 
