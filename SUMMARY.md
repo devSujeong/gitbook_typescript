@@ -6,6 +6,7 @@
 
 * [Index](settings/untitled/README.md)
   * [Install in Next.js](settings/untitled/install-in-next.js.md)
+  * [config for html](settings/untitled/config-for-html.md)
 
 ***
 
